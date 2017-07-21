@@ -3,7 +3,7 @@ CWL version: {{ cwl_version }}
 """
 
 
-class {{ class.name }}
+class {{ class.name }}{% if class.extends %}({{ class.extends }}){% endif %}:
     """
     {{ class.docstring }}
     """
