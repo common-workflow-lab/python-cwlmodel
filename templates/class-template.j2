@@ -1,0 +1,20 @@
+"""
+CWL version: {{ cwl_version }}
+"""
+
+
+class {{ class.name }}
+    """
+    {{ class.docstring }}
+    """
+    def __init__(self, {% for param in params %} {{ param.name }}=None, {% endfor %}):
+        """
+        {% for param in params %}
+        :param {{ param.name }}: {{ param.docstring }}
+        :type {{ param.type }}: {{ param.type }}
+        {% endfor %}
+        """
+
+        {% for param in params %}
+        self.{{ param.name }} = {{ param.name }}
+        {% endfor %}
