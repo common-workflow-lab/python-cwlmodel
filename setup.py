@@ -6,7 +6,7 @@ setup(name="python-cwlmodel",
       install_requires=['jinja2', 'pyyaml'],
       entry_points={
           'console_scripts': [
-              'cwl-sdk = sdk-generation.cwl_sdk_cli:generate_sdk'
+              'cwl-sdk = sdk_generation.cwl_sdk_cli:generate_sdk'
           ]
       },
       packages=[],
