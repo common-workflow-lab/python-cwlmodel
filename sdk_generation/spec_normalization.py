@@ -10,7 +10,6 @@ from schema_salad.ref_resolver import file_uri
 
 
 _logger = logging.getLogger("salad")
-spec = ""
 
 
 def normalize_spec(schema):
@@ -40,7 +39,6 @@ def normalize_spec(schema):
 
     return json.dumps(schema_doc, indent=4)
 
-    # print(json.dumps(list(metaschema_loader.idx.keys()), indent=4))
 
 if __name__ == '__main__':
     print(normalize_spec(sys.argv[1]))
