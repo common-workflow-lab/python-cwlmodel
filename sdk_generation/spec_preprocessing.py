@@ -37,8 +37,13 @@ def normalize_spec(schema):
                       schema, e)
         return 1
 
-    return json.dumps(schema_doc, indent=4)
+    return schema_doc
+
+
+def preprocess_spec(schema):
+    normalized_schema = normalize_spec(schema)
+    return list(filter(lambda x: x['type'] == 'record', normalized_schema))
 
 
 if __name__ == '__main__':
-    print(normalize_spec(sys.argv[1]))
+    print(json.dumps(normalize_spec(sys.argv[1]), indent=4))

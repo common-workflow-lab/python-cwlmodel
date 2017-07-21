@@ -1,7 +1,7 @@
 import argparse as ap
 import os
 
-from .sdk_generation import generate_classes
+from sdk_generation.generate import generate_classes
 
 
 def generate_sdk():
