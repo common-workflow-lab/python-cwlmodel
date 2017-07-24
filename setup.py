@@ -1,15 +1,17 @@
 from setuptools import setup
 
-setup(name="python-cwlmodel",
+setup(name="cwlmodel",
       version="0.1",
       url='https://github.com/common-workflow-language/python-cwlmodel',
-      install_requires=['jinja2', 'pyyaml'],
+      install_requires=['jinja2', 'pyyaml', 'schema-salad'],
       entry_points={
           'console_scripts': [
               'cwl-sdk = sdk_generation.cwl_sdk_cli:generate_sdk'
           ]
       },
-      packages=[],
+      packages=[
+          'sdk_generation',
+          'templates'],
       classifiers=[
           'Development Status :: 3 - Alpha',
           'Operating System :: POSIX',
