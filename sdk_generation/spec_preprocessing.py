@@ -40,9 +40,18 @@ def normalize_spec(schema):
     return schema_doc
 
 
+def rename_classes(schema):
+    """
+    rename future class names to get rid of https://w3id.org/cwl/salad
+    """
+    for item in schema:
+        item['name'] = item['name'].split('#')[-1]
+    return schema
+
+
 def preprocess_spec(schema):
     normalized_schema = normalize_spec(schema)
-    return list(filter(lambda x: x['type'] == 'record', normalized_schema))
+    return rename_classes(list(filter(lambda x: x['type'] == 'record', normalized_schema)))
 
 
 if __name__ == '__main__':
