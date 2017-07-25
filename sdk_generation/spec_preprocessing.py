@@ -4,6 +4,8 @@ import logging
 import sys
 import keyword
 
+import inflection
+
 from schema_salad import schema as sc
 from schema_salad import validate
 from schema_salad.ref_resolver import file_uri
@@ -57,7 +59,7 @@ def preprocess_spec(schema):
             fields = []
             for entry_field in entry.get('fields',[]):
                 field_namespace, field_class_name = entry_field['name'].split('#',1)
-                field_name = field_class_name.split('/',1)[1]
+                field_name = inflection.underscore(field_class_name.split('/',1)[1])
                 if keyword.iskeyword(field_name):
                     field_name += '_'
                 fields.append({'name': field_name, 
