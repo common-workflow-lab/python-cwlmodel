@@ -4,7 +4,7 @@ CWL version: {{ cwl_version }}
 """
 
 {% for class in classes %}
-class {{ class.name }}({% if class.extends %}{{ class.extends }}{% else %}object{% endif %}):
+class {{ class.name }}({% if class.extends %}{{ class.extends|join(', ') }}{% else %}object{% endif %}):
     """
     {{ class.doc }}
     """

@@ -62,11 +62,11 @@ def preprocess_spec(schema):
                     field_name += '_'
                 fields.append({'name': field_name, 
                                'doc': entry_field.get('doc','NODOC')})
-            #print(type(entry.get('extends',[])))
-            #for extend_uri in list(entry.get('extends',[])):
-            #    print(extend_uri)
+            extends_uris = entry.get('extends',[])
+            extends_uris = [extends_uris] if isinstance(extends_uris, str) else extends_uris
+            extends = [extend_uri.split('#',1)[1] for extend_uri in extends_uris]
             yield {'name': name,
-                   #'extends': [extend_uri.split('#',1)[1] for extend_uri in list(entry.get('extends',[]))],
+                   'extends': extends,
                    'doc': entry.get('doc','NODOC'),
                    'fields': fields}
 
