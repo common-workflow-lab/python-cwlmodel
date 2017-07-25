@@ -4,7 +4,7 @@ from jinja2 import Environment
 from jinja2 import FileSystemLoader
 
 from sdk_generation.spec_preprocessing import normalize_spec, preprocess_spec
-
+import yaml
 
 def write_code_to_file(filepath, code):
     with open(filepath, 'w') as f:
@@ -18,11 +18,9 @@ def generate_classes(spec_dir, dest):
     """
     dest = os.path.abspath(dest)
     classes = preprocess_spec(os.path.join(spec_dir, "CommonWorkflowLanguage.yml"))
-
     path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "..", "templates")
     env = Environment(loader=FileSystemLoader(path),
-                      trim_blocks=True,
-                      lstrip_blocks=True)
+                      keep_trailing_newline=True)
     template = env.get_template('class-template.j2')
     result = template.render(classes=classes)
     filepath = os.path.join(dest, "cwl-sdk.py")

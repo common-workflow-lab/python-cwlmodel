@@ -4,21 +4,19 @@ CWL version: {{ cwl_version }}
 """
 
 {% for class in classes %}
-class {{ class.name }}{% if class.extends %}({{ class.extends }}){% endif %}:
+class {{ class.name }}({% if class.extends %}{{ class.extends }}{% else %}object{% endif %}):
     """
     {{ class.doc }}
     """
-    def __init__(self, {% for field in fields %} {% if field.type != "array" %} {{ field.name }}=None, {% endif %}{% endfor %}):
+    def __init__(self, {% for field in class['fields'] %}{% if field.type != "array" %}{{ field.name }}=None, {% endif %}{% endfor %}):
         """
         {% for field in fields %}
         :field {{ field.name }}: {{ field.doc }}
         :type {{ field.type }}: {{ field.type }}
         {% endfor %}
         """
-
-        {% for field in fields %}
-        self.{{ field.name }} = {% if field.type == "array" %}[]{% else %}{{ field.name }}{% endif %}
-        {% endfor %}
-
+        {% for field in class['fields'] %}
+        self.{{ field.name }} = {% if field.type == "array" %}[]{% else %}{{ field.name }}{% endif %}{% endfor %}
+        pass
 
 {% endfor %}

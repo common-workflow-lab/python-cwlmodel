@@ -1,9 +1,9 @@
 import json
 import os
-
 import logging
-
 import sys
+import keyword
+
 from schema_salad import schema as sc
 from schema_salad import validate
 from schema_salad.ref_resolver import file_uri
@@ -42,7 +42,24 @@ def normalize_spec(schema):
 
 def preprocess_spec(schema):
     normalized_schema = normalize_spec(schema)
-    return list(filter(lambda x: x['type'] == 'record', normalized_schema))
+    for entry in normalized_schema:
+        if entry['type'] == 'record':
+            namespace, name = entry['name'].split('#',1)
+            fields = []
+            for entry_field in entry.get('fields',[]):
+                field_namespace, field_class_name = entry_field['name'].split('#',1)
+                field_name = field_class_name.split('/',1)[1]
+                if keyword.iskeyword(field_name):
+                    field_name += '_'
+                fields.append({'name': field_name, 
+                               'doc': entry_field.get('doc','NODOC')})
+            #print(type(entry.get('extends',[])))
+            #for extend_uri in list(entry.get('extends',[])):
+            #    print(extend_uri)
+            yield {'name': name,
+                   #'extends': [extend_uri.split('#',1)[1] for extend_uri in list(entry.get('extends',[]))],
+                   'doc': entry.get('doc','NODOC'),
+                   'fields': fields}
 
 
 if __name__ == '__main__':
