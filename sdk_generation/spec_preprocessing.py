@@ -50,6 +50,11 @@ def rename_classes(schema):
         item['name'] = item['name'].split('#')[-1]
     return schema
 
+def format_docstring(docstring):
+    """
+    format docstring for pretty output (1 tab after \n)
+    """
+    return '\n    '.join(docstring.split('\n'))
 
 def preprocess_spec(schema):
     normalized_schema = normalize_spec(schema)
@@ -62,14 +67,16 @@ def preprocess_spec(schema):
                 field_name = inflection.underscore(field_class_name.split('/',1)[1])
                 if keyword.iskeyword(field_name):
                     field_name += '_'
+                doc = format_docstring(entry_field.get('doc',''))
                 fields.append({'name': field_name, 
-                               'doc': entry_field.get('doc','NODOC')})
+                               'doc': doc})
             extends_uris = entry.get('extends',[])
             extends_uris = [extends_uris] if isinstance(extends_uris, str) else extends_uris
             extends = [extend_uri.split('#',1)[1] for extend_uri in extends_uris]
+            doc = format_docstring(entry.get('doc',''))
             yield {'name': name,
                    'extends': extends,
-                   'doc': entry.get('doc','NODOC'),
+                   'doc': doc,
                    'fields': fields}
 
 

@@ -10,11 +10,12 @@ class {{ class.name }}({% if class.extends %}{{ class.extends|join(', ') }}{% el
     """
     def __init__(self, {% for field in class['fields'] %}{% if field.type != "array" %}{{ field.name }}=None, {% endif %}{% endfor %}):
         """
-        {% for field in fields %}
+        {% for field in class.fields %}
         :field {{ field.name }}: {{ field.doc }}
         :type {{ field.type }}: {{ field.type }}
         {% endfor %}
         """
+        super({{ class.name }}, self).__init__()
         {% for field in class['fields'] %}
         self.{{ field.name }} = {% if field.type == "array" %}[]{% else %}{{ field.name }}{% endif %}{% endfor %}
         pass

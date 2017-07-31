@@ -10,7 +10,6 @@ def write_code_to_file(filepath, code):
     with open(filepath, 'w') as f:
         f.write(code)
 
-
 def generate_classes(spec_dir, dest):
     """
     :param spec_dir: directory with schema-salad CWL specification
